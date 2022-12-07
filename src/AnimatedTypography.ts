@@ -1,6 +1,9 @@
+
 import { useEffect, useState } from "react";
 
-export default function AnimatedTypography({ text, delay = 550, type = 'restart' }) {
+type typeOptions = "restart" // | "reverse";
+
+export default function AnimatedTypography({ text, delay = 550, type = 'restart' }: { text: string, delay: number, type: typeOptions }) {
 
     const [animation, setAnimation] = useState('');
     const [direction, setDirection] = useState('forward')
@@ -28,10 +31,6 @@ export default function AnimatedTypography({ text, delay = 550, type = 'restart'
         return () => clearInterval(animating)
     }, [animation])
 
-    return (
-        <>
-            {animation}
-        </>
-    )
+    return animation
 
 }
