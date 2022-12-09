@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from "react";
 
-type typeOptions = "restart" | "revert";
+type typeOptions = "restart" | "undo";
 
 export default function AnimatedTypography({ text, delay = 550, type = 'restart' }: { text: string, delay: number, type: typeOptions }) {
 
@@ -10,7 +10,11 @@ export default function AnimatedTypography({ text, delay = 550, type = 'restart'
 
     useEffect(() => {
 
-        const revert = () => {
+        const idle = () => {
+            return text;
+        }
+
+        const undo = () => {
             if (direction === 'backward') {
                 if (!animation) {
                     setDirection('forward')
@@ -36,13 +40,14 @@ export default function AnimatedTypography({ text, delay = 550, type = 'restart'
 
         const animating = setInterval(() => {
             switch (type) {
-                case "revert":
-                    revert()
+                case "undo":
+                    undo();
                     break;
                 case "restart":
-                    restart()
+                    restart();
                     break;
                 default:
+                    idle();
                     break;
             }
         }, delay)

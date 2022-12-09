@@ -4,7 +4,7 @@ function AnimatedTypography({ text, delay = 550, type = 'restart' }) {
     const [animation, setAnimation] = useState('');
     const [direction, setDirection] = useState('forward');
     useEffect(() => {
-        const revert = () => {
+        const undo = () => {
             if (direction === 'backward') {
                 if (!animation) {
                     setDirection('forward');
@@ -32,8 +32,8 @@ function AnimatedTypography({ text, delay = 550, type = 'restart' }) {
         };
         const animating = setInterval(() => {
             switch (type) {
-                case "revert":
-                    revert();
+                case "undo":
+                    undo();
                     break;
                 case "restart":
                     restart();

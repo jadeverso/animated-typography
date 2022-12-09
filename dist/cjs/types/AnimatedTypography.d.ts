@@ -1,4 +1,4 @@
-type typeOptions = "restart" | "revert";
+type typeOptions = "restart" | "undo";
 export default function AnimatedTypography({ text, delay, type }: {
     text: string;
     delay: number;
