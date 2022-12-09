@@ -2,8 +2,26 @@ import { useState, useEffect } from 'react';
 
 function AnimatedTypography({ text, delay = 550, type = 'restart' }) {
     const [animation, setAnimation] = useState('');
-    useState('forward');
+    const [direction, setDirection] = useState('forward');
     useEffect(() => {
+        const revert = () => {
+            if (direction === 'backward') {
+                if (!animation) {
+                    setDirection('forward');
+                }
+                else {
+                    setAnimation(animation.slice(0, -1));
+                }
+            }
+            else if (direction === 'forward') {
+                if (animation === text) {
+                    setDirection('backward');
+                }
+                else {
+                    setAnimation(animation + text[animation.length]);
+                }
+            }
+        };
         const restart = () => {
             if (animation === text) {
                 setAnimation('');
@@ -14,15 +32,17 @@ function AnimatedTypography({ text, delay = 550, type = 'restart' }) {
         };
         const animating = setInterval(() => {
             switch (type) {
+                case "revert":
+                    revert();
+                    break;
                 case "restart":
                     restart();
                     break;
             }
         }, delay);
         return () => clearInterval(animating);
-    }, [animation]);
+    }, [animation, direction]);
     return animation;
 }
 
 export { AnimatedTypography as default };
-//# sourceMappingURL=index.js.map

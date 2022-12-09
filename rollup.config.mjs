@@ -1,6 +1,7 @@
 import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import typescript from "@rollup/plugin-typescript";
+import external from 'rollup-plugin-peer-deps-external';
 import dts from "rollup-plugin-dts";
 
 export default [
@@ -10,20 +11,24 @@ export default [
       {
         file: 'dist/cjs/index.js',
         format: "cjs",
-        sourcemap: true,
+        sourcemap: false,
       },
       {
         file: 'dist/esm/index.js',
         format: "esm",
-        sourcemap: true,
+        sourcemap: false,
       },
     ],
     plugins: [
+      external(),
       resolve(),
       commonjs(),
       typescript({ tsconfig: "./tsconfig.json" }),
     ],
-    external: ["react", "react-dom"],
+    external: [
+      'react',
+      'react-dom',
+    ],
   },
   {
     input: "dist/esm/types/index.d.ts",
